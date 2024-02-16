@@ -2,6 +2,8 @@ import torch
 import cv2
 import numpy as np
 
+#1280 x 720
+
 names = ['person', 'bicycle', 'car', 'motorcycle', 'airplane', 'bus', 'train', 'truck', 'boat', 'traffic light',
         'fire hydrant', 'stop sign', 'parking meter', 'bench', 'bird', 'cat', 'dog', 'horse', 'sheep', 'cow',
         'elephant', 'bear', 'zebra', 'giraffe', 'backpack', 'umbrella', 'handbag', 'tie', 'suitcase', 'frisbee',
@@ -16,7 +18,7 @@ class personTrack:
     def __init__(self, maxPerson=1, modelClasses=0):
         self.maxPerson = maxPerson
         self.modelClasses = modelClasses
-        self.model = torch.hub.load('ultralytics/yolov5', 'yolov5n', pretrained=True)
+        self.model = torch.hub.load('ultralytics/yolov5', 'yolov5', pretrained=True)
         self.model.classes = modelClasses
 
     def findPerson(self, img):
@@ -50,7 +52,7 @@ while True:
     ret, frame = cap.read() 
     if ret:
         # Detect person and get bounding box coordinates
-        x1, y1, x2, y2, _, _, _ = pt.findPerson(frame)
+        x1, y1, x2, y2, cx, cy, _ = pt.findPerson(frame)
 
         # Draw bounding box if person is detected
         if x1 is not None:
@@ -63,8 +65,13 @@ while True:
         if cv2.waitKey(1) & 0xFF == ord('q'): 
             break
 
+
+
+
 # Release the capture 
 cap.release() 
+
+
 
 # Destroy all the windows 
 cv2.destroyAllWindows()
