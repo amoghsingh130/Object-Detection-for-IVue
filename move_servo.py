@@ -15,5 +15,10 @@ def set_servo_pwm(servo_n, microseconds):
         0,0,0,0,0     # unused parameters
     )
 
+def pid(cx, cy, fx, fy):
+    maxAdjFactorX = 7.5 * 5 
+    maxAdjFactorY = maxAdjFactorX
+    percentX = ((abs(cx-fx))/fx)
+    percentY = ((abs(cy-fy))/fy)/1.618
+    return maxAdjFactorX * percentX,  maxAdjFactorY * percentY
 
-set_servo_pwm(16, 5)
